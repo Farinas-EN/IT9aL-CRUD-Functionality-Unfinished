@@ -1,0 +1,12 @@
+CREATE DATABASE CRMSystem;
+
+USE CRMSystem;
+
+CREATE TABLE IF NOT EXISTS todo (
+        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(100) NOT NULL,
+        type VARCHAR(100) NOT NULL,
+        status BOOLEAN NOT NULL
+        );
+
+If there is an error form the datatype of status, change it from BOOLEAN --> TINYINT(1) NOT NULL

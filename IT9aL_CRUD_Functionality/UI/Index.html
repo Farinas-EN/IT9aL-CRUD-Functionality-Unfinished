@@ -1,0 +1,64 @@
+<?php
+// Include database connection
+include "database.php";
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Main Dashboard</title>
+  <link rel="stylesheet" href="Stylesheet.css">
+</head>
+
+<body>
+  <p class="Description">Customer Relationship Management System</p>
+
+  <!-- Buttons for CRUD actions -->
+  <form action="ActionHandler.php" method="POST">
+    <div class="ButtonContainer">
+      <button type="submit" name="action" value="create" class="CREATE">CREATE</button>
+      <button type="submit" name="action" value="read" class="READ">READ</button>
+      <button type="submit" name="action" value="update" class="UPDATE">UPDATE</button>
+      <button type="submit" name="action" value="delete" class="DELETE">DELETE</button>
+    </div>
+
+    <div class="ContentTable">
+      <h3>Task List</h3>
+      <table border="1">
+        <tr>
+          <th>Select</th>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Status</th>
+        </tr>
+
+        <?php
+        // Fetch data from the database
+        $query = "SELECT * FROM todo";
+        $result = $conn->query($query);
+
+        if ($result->num_rows > 0):
+          while ($row = $result->fetch_assoc()):
+        ?>
+        <tr>
+          <td>
+            <input type="radio" name="selected_id" value="<?= $row['ID']; ?>" required>
+          </td>
+          <td><?= $row['ID']; ?></td>
+          <td><?= htmlspecialchars($row['name']); ?></td>
+          <td><?= htmlspecialchars($row['type']); ?></td>
+          <td><?= $row['status'] == 0 ? "Ongoing" : "Completed"; ?></td>
+        </tr>
+        <?php endwhile; else: ?>
+        <tr>
+          <td colspan="5">No tasks found.</td>
+        </tr>
+        <?php endif; ?>
+      </table>
+    </div>
+  </form>
+</body>
+</html>
